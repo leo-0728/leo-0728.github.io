@@ -5,7 +5,7 @@
 	<title>leo-0728's page</title>
 	<style>
 	body {
-	background-color:#dddddd;
+	background-color: #dddddd;
 	}
 	h1 {
 	font-family:"Microsoft YaHei light";
@@ -30,25 +30,25 @@
 	</style>
 </head>
 <body>
-	<h1 calss="title">leo的个人网页</h1>
+	<h1 class="title">leo的个人网页</h1>
 	<h3 class="subtitle">开发中</h3>
-	<a href="https://www.github.com/leo-0728/leo-0728.github.io">代码仓库地址<br></a>
+	<a href="https://www.github.com/leo-0728/leo-0728.github.io">帮助我们或得到源代码?代码仓库地址<br></a>
 	<p>打开时间：</p>
 	<div id="time" class="time"></div>
-    	<script>
-        	// 获取当前时间并更新显示
-			function updateTime() {
-            	const now = new Date();
-	            const year = now.getFullYear();
-    	        const month = now.getMonth() + 1;
-        	    const day = now.getDate();
-            	const hours = now.getHours().toString().padStart(2, '0');
-      	        const minutes = now.getMinutes().toString().padStart(2, '0');
-           	    const seconds = now.getSeconds().toString().padStart(2, '0');
-            // 时间格式化
+    <script>
+    	// 获取当前时间并更新显示
+		function updateTime() {
+			const now = new Date();
+		    const year = now.getFullYear();
+    		const month = now.getMonth() + 1;
+    		const day = now.getDate();
+    		const hours = now.getHours().toString().padStart(2, '0');
+    	    const minutes = now.getMinutes().toString().padStart(2, '0');
+		    const seconds = now.getSeconds().toString().padStart(2, '0');
+    	    // 时间格式化
             	const timeString = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
             	document.getElementById("time").textContent = timeString;
-			}
+		}
         updateTime();
 		//update
 		setInterval(updateTime, 1000); 
