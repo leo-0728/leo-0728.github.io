@@ -23,14 +23,18 @@
 		font-family:"Microsoft YaHei";
 		font-size:18px;
 	}
+	#time {
+		font-family:"Microsoft YaHei";
+		text-align:right;
+	}
 	</style>
 </head>
 <body>
-	<h1>leo的个人网页</h1>
-	<h3>开发中</h3>
+	<h1 calss="title">leo的个人网页</h1>
+	<h3 class="subtitle">开发中</h3>
 	<a href="https://www.github.com/leo-0728/leo-0728.github.io">代码仓库地址<br></a>
 	<p>打开时间：</p>
-	<div id="time"></div>
+	<div id="time" class="time"></div>
     	<script>
         	// 获取当前时间并更新显示
 			function updateTime() {
@@ -46,6 +50,7 @@
             	document.getElementById("time").textContent = timeString;
 			}
         updateTime();
+		setInterval(updateTime, 1000); 
     </script>
 	<button type="button" onclick="alert('欢迎!,本网页使用MIT协议')">点我</button>
 </body>
