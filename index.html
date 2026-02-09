@@ -46,8 +46,8 @@
     	    const minutes = now.getMinutes().toString().padStart(2, '0');
 		    const seconds = now.getSeconds().toString().padStart(2, '0');
     	    // 时间格式化
-            	const timeString = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
-            	document.getElementById("time").textContent = timeString;
+            const timeString = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+            document.getElementById("time").textContent = timeString;
 		}
         updateTime();
 		//update
