@@ -36,7 +36,7 @@
 	<p>打开时间：</p>
 	<div id="time" class="time"></div>
     <script>
-    	// 获取当前时间并更新显示
+    	//get time
 		function updateTime() {
 			const now = new Date();
 		    const year = now.getFullYear();
@@ -45,8 +45,7 @@
     		const hours = now.getHours().toString().padStart(2, '0');
     	    const minutes = now.getMinutes().toString().padStart(2, '0');
 		    const seconds = now.getSeconds().toString().padStart(2, '0');
-    	    // 时间格式化
-            const timeString = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+            const timeString = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;//to string
             document.getElementById("time").textContent = timeString;
 		}
         updateTime();
