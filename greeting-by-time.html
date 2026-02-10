@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时光絮语</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+        }
+
+        body {	
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            transition: background 1.5s ease;
+        }
+
+        .greeting-container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.92);
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            max-width: 700px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .time-period {
+            font-size: 0.95rem;
+            color: #7b8c9d;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .greeting-text {
+            font-size: 2.2rem;
+            line-height: 1.5;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 0;
+        }
+
+        .current-time {
+            font-size: 1rem;
+            color: #95a5a6;
+            border-top: 1px dashed #eee;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .hint {
+            font-size: 0.85rem;
+            color: #bdc3c7;
+            margin-top: 2rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="greeting-container">
+        <div class="time-period" id="periodLabel"></div>
+        <div class="greeting-text" id="greeting"></div>
+        <div class="current-time" id="currentTime"></div>
+    </div>
+
+    <script>
+        // 问候语数据库（精选）
+        const greetingsByTime = {
+            deepNight: { // 00:00 - 05:00
+                period: "深夜 · 静思",
+                texts: [
+                    "星辰低语，万物入眠。愿你好梦如舟，渡往安宁的彼岸。",
+                    "夜色为墨，月光作笔。此刻宜沉淀、宜放空。",
+                    "城市睡去，灯火温柔。这是属于思考者的静谧时刻。"
+                ],
+                bgColorStart: "#0c2461",
+                bgColorEnd: "#1e3799"
+            },
+            dawn: { // 05:00 - 07:00
+                period: "破晓 · 新生",
+                texts: [
+                    "晨光初酿，露珠未晞。世界正在重启，愿你今日如朝霞般崭新。",
+                    "第一缕光穿过云层，像命运轻叩窗扉。",
+                    "风铃轻响，晨鸟试音。黎明是生命赠与的空白诗页。"
+                ],
+                bgColorStart: "#6a89cc",
+                bgColorEnd: "#4a69bd"
+            },
+            morning: { // 07:00 - 09:00
+                period: "清晨 · 启程",
+                texts: [
+                    "早啊，旅人。昨夜的星辰已沉入记忆，今晨的阳光正等待你签收。",
+                    "茶香初沸，书页待翻。这是灵魂最清醒的时刻，宜耕种梦想。",
+                    "晨光洗净了时间的刻度，此刻你拥有最纯净的「开始」。"
+                ],
+                bgColorStart: "#38ada9",
+                bgColorEnd: "#079992"
+            },
+            lateMorning: { // 09:00 - 12:00
+                period: "午前 · 丰盈",
+                texts: [
+                    "日光渐满，思绪正稠。愿你如葵花追光，专注而饱满地生长。",
+                    "时间的溪流此刻最清澈，适合打捞灵感，编织创造的网。",
+                    "上午是未写完的长信，每一个行动都在为它添上笔画。"
+                ],
+                bgColorStart: "#78e08f",
+                bgColorEnd: "#38ada9"
+            },
+            afternoon: { // 12:00 - 17:00
+                period: "午后 · 沉淀",
+                texts: [
+                    "日光西斜，树影渐长。这是思想沉淀、灵感悄然结晶的时刻。",
+                    "午后时光像慢调的蜜，在忙碌的间隙里，别忘了给自己一朵云的时间。",
+                    "窗外的光正在移动它的棋盘，而你是自己时间的棋手。"
+                ],
+                bgColorStart: "#f6b93b",
+                bgColorEnd: "#e58e26"
+            },
+            dusk: { // 17:00 - 20:00
+                period: "黄昏 · 归心",
+                texts: [
+                    "暮色熔金，归鸟成诗。把繁忙还给白天，把温柔留给自己。",
+                    "夕阳正在为云朵镶上今日最后的金边，你的心也该靠岸了。",
+                    "白昼与夜晚在此交接，像一封用霞光封缄的邀请函。"
+                ],
+                bgColorStart: "#e55039",
+                bgColorEnd: "#eb2f06"
+            },
+            night: { // 20:00 - 24:00
+                period: "夜晚 · 深静",
+                texts: [
+                    "星河欲转，灯火渐疏。让今日的故事沉入梦的土壤，等待明日发芽。",
+                    "月光开始编织安眠曲，万物都在学习放下的艺术。",
+                    "该让思绪靠岸了。把未完的交给梦境，把已尽的还给昨天。"
+                ],
+                bgColorStart: "#4a69bd",
+                bgColorEnd: "#0c2461"
+            }
+        };
+
+        // 获取当前时间并判断时段
+        function getCurrentPeriod() {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+
+            // 时间判断逻辑
+            if (hour >= 0 && hour < 5) return 'deepNight';
+            if (hour >= 5 && hour < 7) return 'dawn';
+            if (hour >= 7 && hour < 9) return 'morning';
+            if (hour >= 9 && hour < 12) return 'lateMorning';
+            if (hour >= 12 && hour < 17) return 'afternoon';
+            if (hour >= 17 && hour < 20) return 'dusk';
+            if (hour >= 20 && hour < 24)return 'night';
+        }
+
+        // 更新页面内容
+        function updateGreeting() {
+            const periodKey = getCurrentPeriod();
+            const periodData = greetingsByTime[periodKey];
+
+            // 随机选择一条问候语
+            const randomIndex = Math.floor(Math.random() * periodData.texts.length);
+            const greetingToShow = periodData.texts[randomIndex];
+
+            // 更新DOM
+            document.getElementById('periodLabel').textContent = periodData.period;
+            document.getElementById('greeting').textContent = greetingToShow;
+
+            // 平滑更新背景色
+            document.body.style.background = `linear-gradient(135deg, ${periodData.bgColorStart} 0%, ${periodData.bgColorEnd} 100%)`;
+
+            // 更新时间显示
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const dateString = now.toLocaleDateString('zh-CN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('currentTime').innerHTML = ` ${dateString} <br> ${timeString}`;
+        }
+
+        // 页面加载时运行一次
+        updateGreeting();
+        // 每秒更新时间，每分钟更新一次问候语（避免过于频繁）
+        setInterval(updateGreeting, 60000);
+        setInterval(() => {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('currentTime').innerHTML = ` ${now.toLocaleDateString('zh-CN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} <br> ${timeString}`;
+        }, 1000);
+    </script>
+</body>
+</html>

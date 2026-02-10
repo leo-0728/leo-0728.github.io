@@ -46,6 +46,9 @@
     	    const minutes = now.getMinutes().toString().padStart(2, '0');
 		    const seconds = now.getSeconds().toString().padStart(2, '0');
             const timeString = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;//to string
+			if (hours) {
+				
+			}
             document.getElementById("time").textContent = timeString;
 		}
         updateTime();
