@@ -1,60 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>leo-0728's page</title>
-	<style>
-	body {
-	background-color: #dddddd;
-	}
-	h1 {
-	font-family:"Microsoft YaHei light";
-	text-align:center;
-	}
-	h3 {
-		font-family:"Microsoft YaHei light";
-		text-align:center;
-	}
-	a {
-		font-family:"Microsoft YaHei";
-		font-size:16px;
-	}
-	p {
-		font-family:"Microsoft YaHei";
-		font-size:18px;
-	}
-	#time {
-		font-family:"Microsoft YaHei";
-		text-align:right;
-	}
-	</style>
+    <meta charset="utf-8">
+    <title>leo-0728's page</title>
+    <style>
+    body {
+        background-color: #dddddd;
+    }
+    h1 {
+        font-family:"Microsoft YaHei light";
+        text-align:center;      }
+    h3 {
+        font-family:"Microsoft YaHei light";
+        text-align:center;
+    }
+    a {
+        font-family:"Microsoft YaHei";
+        font-size:16px;
+    }
+    p {
+        font-family:"Microsoft YaHei";
+        font-size:18px;
+    }
+    #time {
+        font-family:"Microsoft YaHei";
+        text-align:right;
+    }
+    </style>
 </head>
 <body>
-	<h1 class="title">leo的个人网页</h1>
-	<h3 class="subtitle">开发中</h3>
-	<a href="https://www.github.com/leo-0728/leo-0728.github.io">帮助我们或得到源代码?代码仓库地址<br></a>
-	<p>打开时间：</p>
-	<div id="time" class="time"></div>
+    <h1 class="title">leo的个人网页</h1>
+    <h3 class="subtitle">开发中</h3>
+    <a href="https://www.github.com/leo-0728/leo-0728.github.io">帮助我们或得到源代码?代码仓库地址<br></a>
+    <p>打开时间：</p>
+    <div id="time" class="time"></div>
     <script>
-    	//get time
-		function updateTime() {
-			const now = new Date();
-		    const year = now.getFullYear();
-    		const month = now.getMonth() + 1;
-    		const day = now.getDate();
-    		const hours = now.getHours().toString().padStart(2, '0');
-    	    const minutes = now.getMinutes().toString().padStart(2, '0');
-		    const seconds = now.getSeconds().toString().padStart(2, '0');
+        //get time
+        function updateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
             const timeString = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;//to string
-			if (hours) {
-				
-			}
             document.getElementById("time").textContent = timeString;
-		}
+        }
         updateTime();
-		//update
-		setInterval(updateTime, 1000); 
+        //update
+        setInterval(updateTime, 1000); 
     </script>
-	<button type="button" onclick="alert('欢迎!,本网页使用MIT协议')">点我</button>
+    <button type="button" onclick="alert('欢迎!,本网页使用MIT协议')">点我</button>
 </body>
 </html>
