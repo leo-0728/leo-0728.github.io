@@ -168,6 +168,24 @@
     </div>
 
     <script>
+		// 在现有的JavaScript代码中添加以下函数（放在updateGreeting函数附近）
+		function navigateToHomepage(e) {
+		    e.preventDefault(); // 阻止默认跳转行为
+    		// 创建淡出效果
+	    	document.body.style.transition = 'opacity 0.6s ease';
+    		document.body.style.opacity = '0';
+    		// 延迟跳转以实现淡出动画
+    		setTimeout(() => {
+    		    window.location.href = "http://leo0728.dpdns.org/homepage.html";
+            }, 500);
+        }
+        // 在页面加载后为按钮添加事件监听器
+        document.addEventListener('DOMContentLoaded', function() {
+            const homeButton = document.querySelector('.homepage-btn');
+            if (homeButton) {
+                homeButton.addEventListener('click', navigateToHomepage);
+            }
+        });
         // 问候语数据库（精选） - 更新了更柔和的背景色
         const greetingsByTime = {
             deepNight: { // 00:00 - 05:00
@@ -248,13 +266,13 @@
                 bgColorEnd: "#2d3b5e"
             }
         };
-
+        
         // 获取当前时间并判断时段
         function getCurrentPeriod() {
             const now = new Date();
             const hour = now.getHours();
             const minute = now.getMinutes();
-
+            
             // 时间判断逻辑
             if (hour >= 0 && hour < 5) return 'deepNight';
             if (hour >= 5 && hour < 7) return 'dawn';
@@ -264,30 +282,30 @@
             if (hour >= 17 && hour < 20) return 'dusk';
             if (hour >= 20 && hour < 24)return 'night';
         }
-
+        
         // 更新页面内容
         function updateGreeting() {
             const periodKey = getCurrentPeriod();
             const periodData = greetingsByTime[periodKey];
-
+            
             // 随机选择一条问候语
             const randomIndex = Math.floor(Math.random() * periodData.texts.length);
             const greetingToShow = periodData.texts[randomIndex];
-
+            
             // 更新DOM
             document.getElementById('periodLabel').textContent = periodData.period;
             document.getElementById('greeting').textContent = greetingToShow;
-
+            
             // 平滑更新背景色 - 使用新的柔和背景色
             document.body.style.background = `linear-gradient(135deg, ${periodData.bgColorStart} 0%, ${periodData.bgColorEnd} 100%)`;
-
+            
             // 更新时间显示
             const now = new Date();
             const timeString = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             const dateString = now.toLocaleDateString('zh-CN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             document.getElementById('currentTime').innerHTML = ` ${dateString} <br> ${timeString}`;
         }
-
+        
         // 页面加载时运行一次
         updateGreeting();
         // 每秒更新时间，每分钟更新一次问候语（避免过于频繁）
